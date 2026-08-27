@@ -1,5 +1,7 @@
 import csv
 from typing import Dict, Callable, List, Optional, cast
+from urllib.parse import urlparse
+from urllib.request import url2pathname
 
 import requests
 
@@ -52,7 +54,13 @@ def load_results(
         except (KeyError, ValueError):
             return None
 
-    training_data = requests.get(csv_location).text
+    parsed_location = urlparse(csv_location)
+    if parsed_location.scheme in ('', 'file'):
+        path = url2pathname(parsed_location.path) if parsed_location.scheme == 'file' else csv_location
+        with open(path) as f:
+            training_data = f.read()
+    else:
+        training_data = requests.get(csv_location).text
 
     rows = csv.DictReader(training_data.splitlines())
     results = filter(lambda r: type(r) is Result and result_filter(r), map(result_from_row, rows))

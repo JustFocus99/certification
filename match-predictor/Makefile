@@ -30,12 +30,14 @@ backend/test: backend/types
 backend/measure:
 	cd backend; \
 	source env/bin/activate; \
+	source .env; \
 	python -m unittest discover -p "measure_*.py"; \
 
 .PHONY: backend/report
 backend/report:
 	cd backend; \
 	source env/bin/activate; \
+	source .env; \
 	python report.py; \
 
 .PHONY: backend/run
