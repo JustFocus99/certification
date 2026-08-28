@@ -10,6 +10,7 @@ from matchpredictor.matchresults.result import Result
 from matchpredictor.matchresults.results_provider import training_results
 from matchpredictor.model.model_provider import ModelProvider, Model
 from matchpredictor.model.models_api import models_api
+from matchpredictor.predictors.alphabet_predictor import AlphabetPredictor
 from matchpredictor.predictors.home_predictor import HomePredictor
 from matchpredictor.predictors.linear_regression_predictor import train_regression_predictor
 from matchpredictor.predictors.past_results_predictor import train_results_predictor
@@ -23,6 +24,7 @@ from matchpredictor.upcominggames.upcoming_games_api import upcoming_games_api
 def build_model_provider(training_data: List[Result]) -> ModelProvider:
     return ModelProvider([
         Model("Home", HomePredictor()),
+        Model("Alphabet", AlphabetPredictor()),
         Model("Points", train_results_predictor(training_data)),
         Model("Offense simulator (fast)", train_offense_predictor(training_data, 1_000)),
         Model("Offense simulator", train_offense_predictor(training_data, 10_000)),

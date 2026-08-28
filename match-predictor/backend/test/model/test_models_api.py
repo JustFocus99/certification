@@ -30,6 +30,7 @@ class TestModelsApi(TestCase):
 
         self.assertEqual(response.get_json(), {'models': [
             {"name": "Home", "predicts_in_progress": False},
+            {"name": "Alphabet", "predicts_in_progress": False},
             {"name": "Points", "predicts_in_progress": False},
             {"name": "Offense simulator (fast)", "predicts_in_progress": True},
             {"name": "Offense simulator", "predicts_in_progress": True},
