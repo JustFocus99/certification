@@ -11,6 +11,7 @@ from matchpredictor.matchresults.results_provider import training_results
 from matchpredictor.model.model_provider import ModelProvider, Model
 from matchpredictor.model.models_api import models_api
 from matchpredictor.predictors.alphabet_predictor import AlphabetPredictor
+from matchpredictor.predictors.elo_predictor import train_elo_predictor
 from matchpredictor.predictors.home_predictor import HomePredictor
 from matchpredictor.predictors.linear_regression_predictor import train_regression_predictor
 from matchpredictor.predictors.past_results_predictor import train_results_predictor
@@ -26,6 +27,7 @@ def build_model_provider(training_data: List[Result]) -> ModelProvider:
         Model("Home", HomePredictor()),
         Model("Alphabet", AlphabetPredictor()),
         Model("Points", train_results_predictor(training_data)),
+        Model("Elo", train_elo_predictor(training_data)),
         Model("Offense simulator (fast)", train_offense_predictor(training_data, 1_000)),
         Model("Offense simulator", train_offense_predictor(training_data, 10_000)),
         Model("Full simulator (fast)", train_offense_and_defense_predictor(training_data, 1_000)),
