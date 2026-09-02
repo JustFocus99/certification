@@ -1,4 +1,5 @@
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
+import org.gradle.jvm.toolchain.JavaLanguageVersion
 
 plugins {
     kotlin("jvm")
@@ -9,6 +10,12 @@ group = "io.initialcapacity.emailverifier"
 
 kotlin {
     jvmToolchain(21)
+}
+
+tasks.withType<JavaExec>().configureEach {
+    javaLauncher.set(javaToolchains.launcherFor {
+        languageVersion.set(JavaLanguageVersion.of(21))
+    })
 }
 
 repositories {
