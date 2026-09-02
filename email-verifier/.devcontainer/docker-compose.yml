@@ -1,0 +1,41 @@
+services:
+  email_verifier_app:
+    build:
+      context: ..
+      dockerfile: .devcontainer/Dockerfile
+    volumes:
+      - ..:/workspace:cached
+    command: sleep infinity
+
+  email_verifier_db:
+    image: postgres:14.3
+    restart: unless-stopped
+    network_mode: service:email_verifier_app
+    volumes:
+      - email-verifier-postgres-data:/var/lib/postgresql/data
+    command: -p 5555
+    environment:
+      POSTGRES_DB: 'postgres'
+      POSTGRES_USER: 'emailverifier'
+      POSTGRES_PASSWORD: 'emailverifier'
+      ADDITIONAL_POSTGRES_DBS: 'registration_test,notification_dev,notification_test'
+
+  email_verifier_rabbitmq:
+    image: rabbitmq:3.10.5-management
+    restart: unless-stopped
+    network_mode: service:email_verifier_app
+    configs:
+      - source: plugins
+        target: /etc/rabbitmq/enabled_plugins
+    volumes:
+      - email-verifier-rabbit-data:/var/lib/rabbitmq/
+      - email-verifier-rabbit-logs:/var/log/rabbitmq
+
+configs:
+  plugins:
+    content: "[rabbitmq_consistent_hash_exchange]."
+
+volumes:
+  email-verifier-postgres-data:
+  email-verifier-rabbit-data:
+  email-verifier-rabbit-logs:

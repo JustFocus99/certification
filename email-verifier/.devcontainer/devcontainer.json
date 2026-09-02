@@ -1,0 +1,17 @@
+{
+  "name": "Email Verifier",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "email_verifier_app",
+  "forwardPorts": [8081, 5555, 5672, 15672],
+  "postCreateCommand": "bash .devcontainer/set-up-environment.sh",
+  "runArgs": [
+    "--mount",
+    "type=volume,target=${containerWorkspaceFolder}/.idea",
+  ],
+  "workspaceFolder": "/workspace",
+  "features": {
+    "ghcr.io/devcontainers/features/sshd:1": {
+      "version": "latest"
+    }
+  }
+}
