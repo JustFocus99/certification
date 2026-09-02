@@ -28,6 +28,15 @@ export default function () {
 
 /**
  * 
+ * Number of iterations : 6543
+
+Percentage of checks passed : 100.00%
+
+Median HTTP request duration : 37.6ms
+
+HTTP requests failed : 0.00%
+ * 
+ * 
  * k6 run test.js
 
          /\      Grafana   /‾‾/  
