@@ -11,7 +11,7 @@ services:
       ADDITIONAL_POSTGRES_DBS: 'registration_test,notification_dev,notification_test'
     volumes:
       - ./databases/init-scripts:/docker-entrypoint-initdb.d
-      - ./.docker-data/.pg-data:/var/lib/postgresql/data
+      - pg-data:/var/lib/postgresql/data
   rabbitmq:
     image: rabbitmq:3.10.5-management
     container_name: email-verifier-rabbit
@@ -24,6 +24,9 @@ services:
     volumes:
       - ./.docker-data/.rabbit-data:/var/lib/rabbitmq/
       - ./.docker-data/.rabbit-log:/var/log/rabbitmq
+
+volumes:
+  pg-data:
 
 configs:
   plugins:

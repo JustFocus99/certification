@@ -8,7 +8,7 @@ designed to handle very high throughput.
 1.  Run docker-compose.
 
     ```shell
-    docker-compose up
+    docker compose up
     ```
 
 1.  Run migrations
